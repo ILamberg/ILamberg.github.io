@@ -1,0 +1,88 @@
+<!Doctype HTML>
+<html>
+<head><title>Question 1</title>
+	<style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid white;
+            text-align: center;
+        }
+        th {
+            background-color: #000000;
+        }
+    </style>
+	<script type="text/javascript">
+		function Compute() {
+
+     mark1 = parseInt(document.getElementById("mark1").textContent) || 0;
+     mark2 = parseInt(document.getElementById("mark2").textContent) || 0;
+     mark3 = parseInt(document.getElementById("mark3").textContent) || 0;
+     mark4 = parseInt(document.getElementById("mark4").textContent) || 0;
+     mark5 = parseInt(document.getElementById("mark5").textContent) || 0;
+    
+    let total = mark1 + mark2 + mark3 + mark4 + mark5;
+    
+    let average = total / 5;
+    
+    let grade;
+    if (average < 60) {
+        grade = 'F';
+    } else if (average < 70) {
+        grade = 'D';
+    } else if (average < 80) {
+        grade = 'C';
+    } else if (average < 90) {
+        grade = 'B';
+    } else if (average <= 100) {
+        grade = 'A';
+    }
+
+    alert("the Average is: " + average + " and The grade is: " + grade);
+}
+
+	</script>
+</head>
+<body bgcolor="#222222" text="#ffffff" link="#706e66" alink="#ffffff" vlink="#706e66" style="font-family: sans-serif;">
+	<center><h1>Question 1</h1></center>
+	<center><p><font size="5"><a href="../index.html" title="to HomePage">Go Back</a></font></p></center>
+	<hr>
+	<center><table>
+        <tr>
+            <th>Student Name</th>
+            <th>Marks</th>
+        </tr>
+        <tr>
+            <td>David</td>
+            <td id="mark1">80</td>
+        </tr>
+        <tr>
+            <td>Vinoth</td>
+            <td id="mark2">77</td>
+        </tr>
+        <tr>
+            <td>Divya</td>
+            <td id="mark3">88</td>
+        </tr>
+        <tr>
+            <td>Ishitha</td>
+            <td id="mark4">95</td>
+        </tr>
+        <tr>
+            <td>Thomas</td>
+            <td id="mark5">68</td>
+        </tr>	
+        <form>
+        <tr>
+        	<td colspan="2"><button onclick="Compute()" style="width: 100%; background-color: green; color: White;">Compute Average</button></td>
+        </tr>
+        </form>
+    </table></center>
+    <hr>
+    <center><p><font size="5">Go To <a href="Q2.html" title="to HomePage">Question 2</a></font></p></center>
+</body>
+</html>

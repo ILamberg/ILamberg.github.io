@@ -1,0 +1,127 @@
+<!Doctype HTML>
+<html>
+<head><title>Question 2</title>
+
+	<style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid white;
+            text-align: center;
+        }
+        th {
+            background-color: #000000;
+        }
+    </style>
+
+	<script type="text/javascript">
+
+let enos = [];
+let enames = [];
+let esala = [];
+
+function Store_Data() {
+    enos.push(document.getElementById("a1").value);
+    enames.push(document.getElementById("a2").value);
+    esala.push(document.getElementById("a3").value);
+    enos.push(document.getElementById("b1").value);
+    enames.push(document.getElementById("b2").value);
+    esala.push(document.getElementById("b3").value);
+    enos.push(document.getElementById("c1").value);
+    enames.push(document.getElementById("c2").value);
+    esala.push(document.getElementById("c3").value);
+    enos.push(document.getElementById("d1").value);
+    enames.push(document.getElementById("d2").value);
+    esala.push(document.getElementById("d3").value);
+    enos.push(document.getElementById("e1").value);
+    enames.push(document.getElementById("e2").value);
+    esala.push(document.getElementById("e3").value);
+    enos.push(document.getElementById("f1").value);
+    enames.push(document.getElementById("f2").value);
+    esala.push(document.getElementById("f3").value);
+
+    let choice = parseInt(prompt("Data Stored. Enter your Choice: (1). Print Data (2). Sort Data (3). Exit"));
+
+    while (choice != 3) {
+        switch (choice) {
+            case 1:
+                print_data();
+                break;
+            case 2:
+                enos.sort();
+                break;
+            default:
+                alert("Invalid choice. Please enter 1, 2, or 3.");
+                break;
+        }
+        choice = parseInt(prompt("Enter your Choice: (1). Print Data (2). Sort Data (3). Exit"));
+    }
+
+    alert("Thanks for using the data storage system.");
+}
+
+function print_data() {
+    document.write("<h1>Employee Data</h1><br>");
+    for (i = 0; i < enos.length; i++) {
+        document.write(enos[i] + "&nbsp;" + enames[i] + "&nbsp;" + esala[i] + "<br>");
+    }
+    document.write("<hr>");
+}
+
+
+	</script>
+</head>
+<body bgcolor="#222222" text="#ffffff" link="#706e66" alink="#ffffff" vlink="#706e66" style="font-family: sans-serif;">
+	<center><h1>Question 2</h1></center>
+	<center><p><font size="5"><a href="../index.html" title="to HomePage">Go Back</a></font></p></center>
+	<hr>
+
+	<center><table>
+		<tr>
+			<th>Employee Number</th><th>Employee Name</th><th>Employee Salary</th>
+		</tr>
+		<form>
+		<tr>
+			<td><input type="text" id="a1"></td>
+			<td><input type="text" id="a2"></td>
+			<td><input type="text" id="a3"></td>
+		</tr>
+		<tr>
+			<td><input type="text" id="b1"></td>
+			<td><input type="text" id="b2"></td>
+			<td><input type="text" id="b3"></td>
+		</tr>
+		<tr>
+			<td><input type="text" id="c1"></td>
+			<td><input type="text" id="c2"></td>
+			<td><input type="text" id="c3"></td>
+		</tr>
+		<tr>
+			<td><input type="text" id="d1"></td>
+			<td><input type="text" id="d2"></td>
+			<td><input type="text" id="d3"></td>
+		</tr>
+		<tr>
+			<td><input type="text" id="e1"></td>
+			<td><input type="text" id="e2"></td>
+			<td><input type="text" id="e3"></td>
+		</tr>
+		<tr>
+			<td><input type="text" id="f1"></td>
+			<td><input type="text" id="f2"></td>
+			<td><input type="text" id="f3"></td>
+		</tr>
+		<tr>
+			<td colspan="2"><button onclick="Store_Data()" style="width: 100%; background-color: Green; color: White;">Add</button></td>
+			<td><input type="Reset" style="width: 100%; background-color: Red; color: White;"> </td>
+		</tr>
+
+	</table></center>
+    <hr>
+    <center><p><font size="5">Go To <a href="Q1.html" title="to Question 1">Question 1</a></font></p></center>
+</body>
+</html>
