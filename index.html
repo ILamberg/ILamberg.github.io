@@ -2436,66 +2436,64 @@
                 if (permission === "granted") {
                     const prayerName = 'Dhuhr'; // Example prayer name
                     
-                    // Show loading notification
-                    showNotification("Sending notification...", "success");
-                    
-                    // Delay notification by 2 seconds
-                    setTimeout(() => {
-                        try {
-                            // Create and show notification
-                            new Notification(
-                                currentLanguage === 'en' ? 
-                                    `Adan for ${translations['en'][prayerName.toLowerCase()]}` :
-                                    `أذان ${translations['ar'][prayerName.toLowerCase()]}`, 
-                                {
-                                    body: currentLanguage === 'en' ? 
-                                        `It's time for ${translations['en'][prayerName.toLowerCase()]} prayer` :
-                                        `حان وقت صلاة ${translations['ar'][prayerName.toLowerCase()]}`,
-                                    icon: 'icons/prayer-icon-192.png',
-                                    requireInteraction: true,
-                                    tag: 'prayer-notification'
-                                }
-                            );
-                            notificationsEnabled = true;
-                            showNotification("Test notification sent successfully", "success");
-                        } catch (error) {
-                            console.error('Notification error:', error);
-                            showNotification("Error sending notification", "error");
+                    // Create Windows notification
+                    const notification = new Notification(
+                        currentLanguage === 'en' ? 
+                            `Adan for ${translations['en'][prayerName.toLowerCase()]}` :
+                            `أذان ${translations['ar'][prayerName.toLowerCase()]}`, 
+                        {
+                            body: currentLanguage === 'en' ? 
+                                `It's time for ${translations['en'][prayerName.toLowerCase()]} prayer` :
+                                `حان وقت صلاة ${translations['ar'][prayerName.toLowerCase()]}`,
+                            icon: 'icons/prayer-icon-192.png',
+                            requireInteraction: true,
+                            silent: false,
+                            tag: 'prayer-notification',
+                            timestamp: Date.now()
                         }
-                    }, 2000); // 2 second delay
+                    );
+
+                    // Handle notification click
+                    notification.onclick = function() {
+                        window.focus();
+                        notification.close();
+                    };
+
+                    notificationsEnabled = true;
                 } else {
                     showNotification("Notification permission denied", "error");
                 }
             });
         }
 
-        // Also update the prayer notification function
+        // Update the prayer notification function
         function notifyUser(prayerName) {
             if (!("Notification" in window)) {
                 return;
             }
 
             if (Notification.permission === "granted" && notificationsEnabled) {
-                // Delay notification by 2 seconds
-                setTimeout(() => {
-                    try {
-                        new Notification(
-                            currentLanguage === 'en' ? 
-                                `Adan for ${translations['en'][prayerName.toLowerCase()]}` :
-                                `أذان ${translations['ar'][prayerName.toLowerCase()]}`,
-                            {
-                                body: currentLanguage === 'en' ? 
-                                    `It's time for ${translations['en'][prayerName.toLowerCase()]} prayer` :
-                                    `حان وقت صلاة ${translations['ar'][prayerName.toLowerCase()]}`,
-                                icon: 'icons/prayer-icon-192.png',
-                                requireInteraction: true,
-                                tag: 'prayer-notification'
-                            }
-                        );
-                    } catch (error) {
-                        console.error('Prayer notification error:', error);
+                const notification = new Notification(
+                    currentLanguage === 'en' ? 
+                        `Adan for ${translations['en'][prayerName.toLowerCase()]}` :
+                        `أذان ${translations['ar'][prayerName.toLowerCase()]}`,
+                    {
+                        body: currentLanguage === 'en' ? 
+                            `It's time for ${translations['en'][prayerName.toLowerCase()]} prayer` :
+                            `حان وقت صلاة ${translations['ar'][prayerName.toLowerCase()]}`,
+                        icon: 'icons/prayer-icon-192.png',
+                        requireInteraction: true,
+                        silent: false,
+                        tag: 'prayer-notification',
+                        timestamp: Date.now()
                     }
-                }, 2000); // 2 second delay
+                );
+
+                // Handle notification click
+                notification.onclick = function() {
+                    window.focus();
+                    notification.close();
+                };
             }
         }
     </script>
