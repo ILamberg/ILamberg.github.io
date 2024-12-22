@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="icons/prayer-icon-192.png">
+    <link rel="apple-touch-icon" href="icons/logo.png">
     <style>
         :root {
             --primary-color: #1a1a2e;
@@ -1555,7 +1555,7 @@
                         notificationTimeouts[nextPrayer] = setTimeout(() => {
                             new Notification(`${translations[currentLanguage][nextPrayer.toLowerCase()]} Prayer Time`, {
                                 body: `It's time for ${translations[currentLanguage][nextPrayer.toLowerCase()]} prayer`,
-                                icon: 'icons/prayer-icon-192.png'
+                                icon: 'icons/logo.png'
                             });
                         }, timeUntilPrayer);
                     }
@@ -1692,7 +1692,7 @@
                                     body: currentLanguage === 'en' ? 
                                         "You will now receive prayer time notifications" :
                                         "ستتلقى الآن إشعارات أوقات الصلاة",
-                                    icon: 'icons/prayer-icon-192.png'
+                                    icon: 'icons/logo.png'
                                 }
                             );
                         }, 1000);
@@ -2436,30 +2436,36 @@
                 if (permission === "granted") {
                     const prayerName = 'Dhuhr'; // Example prayer name
                     
-                    // Create Windows notification
-                    const notification = new Notification(
-                        currentLanguage === 'en' ? 
-                            `Adan for ${translations['en'][prayerName.toLowerCase()]}` :
-                            `أذان ${translations['ar'][prayerName.toLowerCase()]}`, 
-                        {
-                            body: currentLanguage === 'en' ? 
-                                `It's time for ${translations['en'][prayerName.toLowerCase()]} prayer` :
-                                `حان وقت صلاة ${translations['ar'][prayerName.toLowerCase()]}`,
-                            icon: 'icons/prayer-icon-192.png',
-                            requireInteraction: true,
-                            silent: false,
-                            tag: 'prayer-notification',
-                            timestamp: Date.now()
-                        }
-                    );
+                    // Show loading notification
+                    showNotification("Sending notification...", "success");
+                    
+                    // Add 2-second delay
+                    setTimeout(() => {
+                        // Create Windows notification
+                        const notification = new Notification(
+                            currentLanguage === 'en' ? 
+                                `Adan for ${translations['en'][prayerName.toLowerCase()]}` :
+                                `أذان ${translations['ar'][prayerName.toLowerCase()]}`, 
+                            {
+                                body: currentLanguage === 'en' ? 
+                                    `It's time for ${translations['en'][prayerName.toLowerCase()]} prayer` :
+                                    `حان وقت صلاة ${translations['ar'][prayerName.toLowerCase()]}`,
+                                icon: 'icons/logo.png',
+                                requireInteraction: true,
+                                silent: false,
+                                tag: 'prayer-notification',
+                                timestamp: Date.now()
+                            }
+                        );
 
-                    // Handle notification click
-                    notification.onclick = function() {
-                        window.focus();
-                        notification.close();
-                    };
+                        // Handle notification click
+                        notification.onclick = function() {
+                            window.focus();
+                            notification.close();
+                        };
 
-                    notificationsEnabled = true;
+                        notificationsEnabled = true;
+                    }, 2000); // 2-second delay
                 } else {
                     showNotification("Notification permission denied", "error");
                 }
@@ -2481,7 +2487,7 @@
                         body: currentLanguage === 'en' ? 
                             `It's time for ${translations['en'][prayerName.toLowerCase()]} prayer` :
                             `حان وقت صلاة ${translations['ar'][prayerName.toLowerCase()]}`,
-                        icon: 'icons/prayer-icon-192.png',
+                        icon: 'icons/logo.png',
                         requireInteraction: true,
                         silent: false,
                         tag: 'prayer-notification',
