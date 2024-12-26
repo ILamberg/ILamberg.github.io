@@ -41,6 +41,12 @@
             --dark-accent: #00b894;
             --button-gradient: linear-gradient(135deg, #16c79a, #0f9b7a);
             --button-hover-gradient: linear-gradient(135deg, #0f9b7a, #16c79a);
+            --header-height: 60px;
+            --footer-height: 60px;
+            --container-padding: clamp(20px, 5vw, 40px);
+            --section-spacing: 24px;
+            --card-spacing: 16px;
+            --animation-duration: 0.3s;
         }
 
         @media (prefers-color-scheme: light) {
@@ -66,36 +72,37 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html {
             scroll-behavior: smooth;
             font-size: var(--font-size-base);
             height: 100%;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
         body {
             background: linear-gradient(135deg, var(--background-color), var(--primary-color));
             color: var(--text-color);
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: var(--spacing-xl);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-            background-attachment: fixed;
         }
 
         .container {
             max-width: 1200px;
             width: 100%;
-            margin: 0 auto;
-            padding: var(--spacing-xl) clamp(20px, 5vw, 40px);
-            animation: fadeIn 0.5s ease-in;
+            margin: var(--section-spacing) auto;
+            padding: var(--container-padding);
             position: relative;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -103,10 +110,11 @@
             background: rgba(255, 255, 255, 0.02);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden; /* Contain child margins */
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -173,9 +181,10 @@
         .prayer-times {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: clamp(15px, 3vw, 25px);
-            margin: var(--spacing-xl) 0;
-            padding: 10px;
+            gap: var(--card-spacing);
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         .prayer-time {
@@ -208,15 +217,17 @@
         }
 
         .current-time {
+            width: 100%;
+            padding: var(--card-spacing);
             font-size: var(--font-size-2xl);
-            margin: var(--spacing-xl) 0;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 10px;
             font-family: 'Courier New', monospace;
-            text-shadow: 0 0 20px rgba(22, 199, 154, 0.5);
-            contain: layout style;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
         }
 
         .time-unit {
@@ -293,29 +304,23 @@
         }
 
         select, button {
-            padding: 12px clamp(20px, 3vw, 30px);
+            padding: 12px 24px;
             border-radius: var(--border-radius);
-            border: 2px solid transparent;
-            background: var(--primary-color);
-            color: var(--text-color);
+            border: none;
+            background: var(--gradient-primary);
+            color: white;
             cursor: pointer;
-            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: var(--font-size-base);
-            font-weight: 500;
-            min-width: 160px;
+            transition: all var(--animation-duration) ease;
+            font-weight: 600;
+            min-width: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: var(--spacing-base);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            gap: 8px;
         }
 
         select:hover, button:hover {
-            background: var(--accent-color);
+            background: var(--gradient-hover);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
@@ -402,55 +407,19 @@
 
         @media (max-width: 768px) {
             :root {
-                --font-size-base: 14px;
-                --spacing-base: 0.75rem;
-                --spacing-lg: 1rem;
-                --spacing-xl: 1.5rem;
+                --container-padding: 16px;
+                --section-spacing: 20px;
+                --card-spacing: 12px;
             }
 
-            .container {
-                padding: var(--spacing-base);
-            }
-
-            body {
-                padding: var(--spacing-base);
-            }
-
-            .current-time {
-                font-size: var(--font-size-xl);
-            }
-
-            .next-prayer {
-                font-size: var(--font-size-lg);
-                padding: var(--spacing-lg);
-            }
-
-            .location-controls {
+            .settings-item {
                 flex-direction: column;
-                gap: var(--spacing-base);
+                gap: var(--card-spacing);
+                text-align: center;
             }
 
-            select, button {
+            button, select {
                 width: 100%;
-                min-width: unset;
-            }
-
-            #notification {
-                left: 20px;
-                right: 20px;
-                max-width: unset;
-            }
-
-            #languageToggle {
-                position: static;
-                margin-top: var(--spacing-base);
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
             }
         }
 
@@ -1018,7 +987,7 @@
 
         .tab-content.active {
             display: block;
-            contain: layout style paint;
+            contain: layout style;
         }
 
         /* Modal Styles */
@@ -1091,8 +1060,8 @@
 
         /* Improve spacing in prayer times grid */
         .prayer-times {
-            gap: clamp(15px, 3vw, 25px);
-            padding: 10px;
+            gap: var(--card-spacing);
+            padding: 0;
         }
 
         /* Better modal spacing for mobile */
@@ -1228,7 +1197,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .settings-item:last-child {
@@ -1317,58 +1285,341 @@
         .cancel-btn {
             background: var(--card-background);
         }
+
+        .refresh-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: var(--border-radius);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: var(--gradient-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .refresh-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .refresh-btn:active i {
+            transform: rotate(180deg);
+        }
+
+        .refresh-btn.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .location-display {
+            width: 100%;
+            padding: var(--card-spacing);
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .location-display i {
+            color: var(--accent-color);
+        }
+
+        .prayer-times-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--section-spacing);
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .prayer-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--card-spacing);
+            text-align: center;
+            width: 100%;
+        }
+
+        .next-prayer-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--card-spacing);
+            width: 100%;
+        }
+
+        .prayer-schedule {
+            width: 100%;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: var(--card-spacing);
+            margin: 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        .city-select {
+            background: var(--accent-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .city-select:hover {
+            background: var(--gradient-hover);
+        }
+
+        .settings-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 20px 0;
+        }
+
+        .reset-item {
+            margin-top: var(--section-spacing);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: var(--section-spacing);
+        }
+
+        /* Reset Confirmation Modal Styles */
+        .reset-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none; /* Changed from flex to none by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .reset-confirmation-modal {
+            background: var(--card-background);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+            box-shadow: var(--box-shadow);
+        }
+
+        .reset-confirmation-modal h3 {
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        .reset-confirmation-modal p {
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .reset-confirmation-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .reset-confirmation-actions button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .reset-confirmation-actions button:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 15px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 45px;
+            height: 45px;
+        }
+
+        .nav-item:hover {
+            color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* Hover effects */
+        .top-nav:hover {
+            transform: translateX(5px);
+        }
+
+        .nav-item:hover i {
+            transform: scale(1.1);
+        }
+
+        /* RTL Support */
+        [dir="rtl"] .top-nav {
+            left: auto;
+            right: 20px;
+        }
+
+        [dir="rtl"] .nav-item:hover {
+            transform: translateX(-5px);
+        }
+
+        [dir="rtl"] .nav-item.active::before {
+            left: auto;
+            right: -10px;
+            border-radius: 4px 0 0 4px;
+        }
+
+        [dir="rtl"] .top-nav:hover {
+            transform: translateX(-5px);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .top-nav {
+                top: 10px;
+                left: 10px;
+                padding: 10px 8px;
+            }
+
+            .nav-item {
+                font-size: 1.1rem;
+                width: 40px;
+                height: 40px;
+                padding: 10px;
+            }
+
+            [dir="rtl"] .top-nav {
+                left: auto;
+                right: 10px;
+            }
+        }
+
+        .home-content {
+            text-align: center;
+            padding: var(--section-spacing);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .home-content h1 {
+            margin-bottom: var(--section-spacing);
+            font-size: 2.5rem;
+        }
     </style>
 </head>
 <body>
+    <nav class="top-nav">
+        <a href="#" onclick="showSection('home')" class="nav-item">
+            <i class="fas fa-home"></i>
+        </a>
+        <a href="#" onclick="showSection('prayers')" class="nav-item">
+            <i class="fas fa-clock"></i>
+        </a>
+        <a href="#" onclick="showSection('calendar')" class="nav-item">
+            <i class="fas fa-calendar"></i>
+        </a>
+        <a href="#" onclick="showSection('stats')" class="nav-item">
+            <i class="fas fa-chart-bar"></i>
+        </a>
+        <a href="#" onclick="showSection('settings')" class="nav-item">
+            <i class="fas fa-cog"></i>
+        </a>
+    </nav>
+
     <div class="container">
         <header>
             <h1><i class="fas fa-mosque" aria-hidden="true"></i> <span class="lang-en">Prayer Times</span><span class="lang-ar" style="display:none;">مواقيت الصلاة</span></h1>
         </header>
 
-        <!-- Main navigation (homepage) -->
-        <div id="main-nav" class="main-nav">
-            <button onclick="showSection('prayers')" class="main-nav-btn">
-                <i class="fas fa-clock"></i>
-                <span class="lang-en">Prayer Times</span>
-                <span class="lang-ar" style="display:none;">مواقيت الصلاة</span>
-            </button>
-            <button onclick="showSection('calendar')" class="main-nav-btn">
-                <i class="fas fa-calendar"></i>
-                <span class="lang-en">Calendar</span>
-                <span class="lang-ar" style="display:none;">التقويم</span>
-            </button>
-            <button onclick="showSection('stats')" class="main-nav-btn">
-                <i class="fas fa-chart-bar"></i>
-                <span class="lang-en">Statistics</span>
-                <span class="lang-ar" style="display:none;">الإحصائيات</span>
-            </button>
-            <button onclick="showSection('settings')" class="main-nav-btn">
-                <i class="fas fa-cog"></i>
-                <span class="lang-en">Settings</span>
-                <span class="lang-ar" style="display:none;">الإعدادات</span>
-            </button>
-            <button onclick="testNotification()" class="main-nav-btn">
-                <i class="fas fa-bell"></i>
-                <span class="lang-en">Test Notification</span>
-                <span class="lang-ar" style="display:none;">اختبار الإشعار</span>
-            </button>
-        </div>
-
         <!-- Section content -->
         <div id="section-content" style="display: none;">
             <div class="section-header">
-                <button onclick="showHome()" class="back-button">
-                    <i class="fas fa-arrow-left"></i>
-                    <span class="lang-en">Back</span>
-                    <span class="lang-ar" style="display:none;">رجوع</span>
-                </button>
                 <div class="section-title">
                     <i id="section-icon" class="fas"></i>
                     <span id="section-name"></span>
                 </div>
             </div>
-            
-            <!-- Your existing content divs -->
+            <div id="home" class="tab-content"></div>
             <div id="prayers" class="tab-content"></div>
             <div id="calendar" class="tab-content"></div>
             <div id="stats" class="tab-content"></div>
@@ -1412,10 +1663,10 @@
                 settings: 'Settings',
                 language: 'Language',
                 today: 'Today',
-                back: 'Back',
-                enableNotifications: 'Enable Notifications',
-                disableNotifications: 'Disable Notifications',
-                loadingPrayerTimes: 'Loading prayer times...'
+                loadingPrayerTimes: 'Loading prayer times...',
+                refreshSuccess: 'Prayer times updated successfully',
+                refreshing: 'Refreshing prayer times',
+                currentLocation: 'Current Location: Nablus, Palestine'
             },
             ar: {
                 fajr: 'الفجر',
@@ -1427,7 +1678,7 @@
                 nextPrayer: 'الصلاة القادمة',
                 timeRemaining: 'الوقت المتبقي',
                 noMorePrayers: 'لا مزيد من الصلوات اليوم',
-                nextPrayerTomorrow: 'الصلاة القادمة: افجر غداً الساعة',
+                nextPrayerTomorrow: 'الصلاة القادمة: الفجر غداً الساعة',
                 connectionRestored: 'تم استعادة الاتصال',
                 offline: 'أنت غير متصل. قد لا يتم تحديث مواقيت الصلاة.',
                 initSuccess: 'تم تهيئة تطبيق مواقيت الصلاة بنجاح',
@@ -1439,10 +1690,10 @@
                 settings: 'الإعدادات',
                 language: 'اللغة',
                 today: 'اليوم',
-                back: 'رجوع',
-                enableNotifications: 'تفعيل الإشعارات',
-                disableNotifications: 'تعطيل الإشعارات',
-                loadingPrayerTimes: 'جاري تحميل مواقيت الصلاة...'
+                loadingPrayerTimes: 'جاري تحميل مواقيت الصلاة...',
+                refreshSuccess: 'تم تحديث مواقيت الصلاة بنجاح',
+                refreshing: 'جاري تحديث مواقيت الصلاة...',
+                currentLocation: 'الموقع الحالي: نابلس، فلسطين'
             }
         };
 
@@ -1454,8 +1705,8 @@
             }
 
             try {
-                const city = document.getElementById('citySelect').value;
-                const [cityName, country] = city.split(',');
+                const selectedCity = localStorage.getItem('selectedCity') || 'Nablus,Palestine';
+                const [cityName, country] = selectedCity.split(',');
                 const date = new Date();
                 const month = date.getMonth() + 1;
                 const year = date.getFullYear();
@@ -1474,7 +1725,7 @@
                 localStorage.setItem('prayerTimes', JSON.stringify({
                     times: prayerTimes,
                     date: date.toDateString(),
-                    city: city
+                    city: cityName
                 }));
             } catch (error) {
                 console.error('Error fetching prayer times:', error);
@@ -1524,20 +1775,30 @@
             let nextPrayer = null;
             let nextPrayerTime = null;
 
-            for (const [prayer, time] of Object.entries(prayerTimes)) {
-                const prayerTime = new Date();
-                const [hours, minutes] = time.split(' ')[0].split(':');
-                prayerTime.setHours(parseInt(hours), parseInt(minutes), 0);
+            // Convert prayer times to Date objects for comparison
+            const prayerTimeObjects = {};
+            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+            
+            prayers.forEach(prayer => {
+                if (prayerTimes[prayer]) {
+                    const [hours, minutes] = prayerTimes[prayer].split(':');
+                    const prayerTime = new Date();
+                    prayerTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+                    prayerTimeObjects[prayer] = prayerTime;
+                }
+            });
 
-                if (prayerTime > now) {
+            // Find next prayer
+            for (const prayer of prayers) {
+                if (prayerTimeObjects[prayer] && prayerTimeObjects[prayer] > now) {
                     nextPrayer = prayer;
-                    nextPrayerTime = prayerTime;
+                    nextPrayerTime = prayerTimeObjects[prayer];
                     break;
                 }
             }
 
             const nextPrayerEl = document.getElementById('nextPrayer');
-            if (!nextPrayerEl) return; // Add this check to prevent errors when element doesn't exist
+            if (!nextPrayerEl) return;
 
             if (nextPrayer) {
                 const timeRemaining = getTimeRemaining(nextPrayerTime);
@@ -1547,31 +1808,21 @@
                         <div>${translations[currentLanguage].timeRemaining}: ${timeRemaining}</div>
                     </div>
                 `;
-
-                // Schedule notification
-                if (notificationsEnabled) {
-                    const timeUntilPrayer = nextPrayerTime - now;
-                    if (timeUntilPrayer > 0) {
-                        clearTimeout(notificationTimeouts[nextPrayer]);
-                        notificationTimeouts[nextPrayer] = setTimeout(() => {
-                            new Notification(`${translations[currentLanguage][nextPrayer.toLowerCase()]} Prayer Time`, {
-                                body: `It's time for ${translations[currentLanguage][nextPrayer.toLowerCase()]} prayer`,
-                                icon: 'icons/logo.png'
-                            });
-                        }, timeUntilPrayer);
-                    }
-                }
             } else {
+                // If no next prayer today, show first prayer of tomorrow
                 nextPrayerEl.textContent = translations[currentLanguage].noMorePrayers;
             }
         }
 
         function getTimeRemaining(endTime) {
             const total = endTime - new Date();
+            if (total <= 0) return '00:00:00';
+
             const hours = Math.floor(total / (1000 * 60 * 60));
             const minutes = Math.floor((total % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((total % (1000 * 60)) / 1000);
-            return `${hours}h ${minutes}m ${seconds}s`;
+
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
 
         function formatArabicTime(date) {
@@ -1602,7 +1853,7 @@
                 let period = '';
 
                 if (currentLanguage === 'ar') {
-                    period = hours < 12 ? 'صباحاً' : 'مساء��';
+                    period = hours < 12 ? 'صباحاً' : 'مساءً';
                     hours = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours;
                 } else {
                     period = hours < 12 ? 'AM' : 'PM';
@@ -1659,63 +1910,71 @@
             showNotification('updateSuccess');
         }
 
-        function toggleNotifications() {
-            if (!("Notification" in window)) {
-                showNotification("Notifications are not supported in this browser", "error");
-                return;
-            }
-
-            Notification.requestPermission().then(permission => {
-                if (permission === "granted") {
-                    notificationsEnabled = !notificationsEnabled;
-                    const button = document.getElementById('notificationToggle');
-                    if (button) {
-                        button.innerHTML = `
-                            <i class="fas fa-bell${notificationsEnabled ? '' : '-slash'}" aria-hidden="true"></i>
-                            <span class="lang-en">${notificationsEnabled ? 'Disable' : 'Enable'} Notifications</span>
-                            <span class="lang-ar" style="display:none;">${notificationsEnabled ? 'تعطيل' : 'تفعيل'} الإشعارات</span>
-                        `;
-                    }
-                    showNotification(
-                        notificationsEnabled ? 
-                            "Notifications enabled" : 
-                            "Notifications disabled"
-                    );
-
-                    // Test notification when enabling
-                    if (notificationsEnabled) {
-                        setTimeout(() => {
-                            new Notification(
-                                currentLanguage === 'en' ? 
-                                    "Notifications Enabled" : 
-                                    "تم تفعيل الإشعارات",
-                                {
-                                    body: currentLanguage === 'en' ? 
-                                        "You will now receive prayer time notifications" :
-                                        "ستتلقى الآن إشعارات أوقات الصلاة",
-                                    icon: 'icons/logo.png'
-                                }
-                            );
-                        }, 1000);
-                    }
-                } else {
-                    showNotification("Notification permission denied", "error");
-                }
-            });
-        }
-
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
-            // Load saved language preference first and apply it immediately
+            // Initialize the app
+            showSection('home');
+            
+            // Show section content
+            const sectionContent = document.getElementById('section-content');
+            sectionContent.style.display = 'block';
+            
+            // Show home section
+            const homeSection = document.getElementById('home');
+            if (homeSection) {
+                homeSection.style.display = 'block';
+            }
+            
+            // Show reset message if needed
+            if (sessionStorage.getItem('showResetMessage')) {
+                sessionStorage.removeItem('showResetMessage');
+                showNotification(
+                    currentLanguage === 'en' 
+                        ? "Application has been reset successfully" 
+                        : "تم إعادة ضبط التطبيق بنجاح",
+                    'success'
+                );
+            }
+
+            // Load saved language preference and apply it
             currentLanguage = localStorage.getItem('language') || 'en';
             document.documentElement.setAttribute('dir', currentLanguage === 'ar' ? 'rtl' : 'ltr');
             
-            // Show home screen first
-            showHome();
-            
             // Update all language elements
             updateLanguageDisplay();
+
+            // Initialize prayer times if needed
+            if (document.getElementById('prayers').style.display === 'block') {
+                initializePrayerTimes();
+            }
         });
+
+        // Add a helper function to initialize prayer times
+        function initializePrayerTimes() {
+            // Set default times
+            prayerTimes = {
+                Fajr: "05:00",
+                Dhuhr: "12:30",
+                Asr: "15:45",
+                Maghrib: "18:15",
+                Isha: "19:30"
+            };
+            
+            // Try to load cached times
+            const cached = localStorage.getItem('prayerTimes');
+            if (cached) {
+                const data = JSON.parse(cached);
+                if (data.date === new Date().toDateString()) {
+                    prayerTimes = data.times;
+                }
+            }
+            
+            // Update UI and fetch new times
+            updatePrayerTimes();
+            fetchPrayerTimes().catch(error => {
+                console.error('Error fetching initial prayer times:', error);
+            });
+        }
 
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
@@ -2072,9 +2331,17 @@
         }, { passive: true });
 
         function showSection(sectionId) {
-            // Hide main navigation
-            document.getElementById('main-nav').style.display = 'none';
-            
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Add active class to clicked nav item
+            const currentNav = document.querySelector(`.nav-item[onclick*="${sectionId}"]`);
+            if (currentNav) {
+                currentNav.classList.add('active');
+            }
+
             // Show section content
             const sectionContent = document.getElementById('section-content');
             sectionContent.style.display = 'block';
@@ -2093,6 +2360,7 @@
             const sectionIcon = document.getElementById('section-icon');
             
             const sections = {
+                home: { icon: 'fa-home', en: 'Home', ar: 'الرئيسية' },
                 prayers: { icon: 'fa-clock', en: 'Prayer Times', ar: 'مواقيت الصلاة' },
                 calendar: { icon: 'fa-calendar', en: 'Calendar', ar: 'التقويم' },
                 stats: { icon: 'fa-chart-bar', en: 'Statistics', ar: 'الإحصائيات' },
@@ -2106,39 +2374,55 @@
             `;
 
             // Add specific content for each section
-            if (sectionId === 'prayers') {
+            if (sectionId === 'home') {
                 selectedSection.innerHTML = `
-                    <div class="current-time" id="currentTime" role="timer" aria-live="polite"></div>
-
-                    <div class="location-controls">
-                        <select id="citySelect" class="focus-visible" aria-label="${translations[currentLanguage].selectCity}">
-                            <!-- Options will be populated by updateCitySelect() -->
-                        </select>
-                        <button onclick="toggleNotifications()" id="notificationToggle" class="focus-visible" aria-label="Toggle notifications">
-                            <i class="fas fa-bell" aria-hidden="true"></i>
-                            <span class="lang-en">${translations['en'].enableNotifications}</span>
-                            <span class="lang-ar" style="display:none;">${translations['ar'].enableNotifications}</span>
-                        </button>
+                    <div class="home-content">
+                        <h1>
+                            <span class="lang-en">Welcome to Prayer Times</span>
+                            <span class="lang-ar" style="display:none;">مرحباً بك في مواقيت الصلاة</span>
+                        </h1>
                     </div>
+                `;
+            } else if (sectionId === 'prayers') {
+                selectedSection.innerHTML = `
+                    <div class="prayer-times-container">
+                        <div class="prayer-header">
+                            <div class="location-display">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span class="lang-en">${translations['en'].currentLocation}</span>
+                                <span class="lang-ar" style="display:none;">${translations['ar'].currentLocation}</span>
+                            </div>
 
-                    <div class="next-prayer" id="nextPrayer" role="status" aria-live="polite">
-                        <div class="loading" aria-label="${translations[currentLanguage].loadingPrayerTimes}"></div>
-                        <span class="lang-en">${translations['en'].loadingPrayerTimes}</span>
-                        <span class="lang-ar" style="display:none;">${translations['ar'].loadingPrayerTimes}</span>
-                    </div>
+                            <div class="current-time" id="currentTime" role="timer" aria-live="polite"></div>
+                        </div>
 
-                    <section>
+                        <div class="next-prayer-section">
+                            <div class="next-prayer" id="nextPrayer" role="status" aria-live="polite">
+                                <div class="loading" aria-label="${translations[currentLanguage].loadingPrayerTimes}"></div>
+                                <span class="lang-en">${translations['en'].loadingPrayerTimes}</span>
+                                <span class="lang-ar" style="display:none;">${translations['ar'].loadingPrayerTimes}</span>
+                            </div>
+
+                            <button onclick="refreshPrayerTimes()" class="refresh-btn" aria-label="Refresh prayer times">
+                                <i class="fas fa-sync-alt"></i>
+                                <span class="lang-en">Refresh</span>
+                                <span class="lang-ar" style="display:none;">تحديث</span>
+                            </button>
+                        </div>
+
                         <h2>
                             <i class="fas fa-clock" aria-hidden="true"></i>
                             <span class="lang-en">${translations['en'].dailySchedule}</span>
                             <span class="lang-ar" style="display:none;">${translations['ar'].dailySchedule}</span>
                         </h2>
-                        <div class="prayer-times" id="allPrayerTimes" role="list"></div>
-                    </section>
+
+                        <div class="prayer-schedule">
+                            <div class="prayer-times" id="allPrayerTimes" role="list"></div>
+                        </div>
+                    </div>
                 `;
 
                 // Initialize only when prayers section is shown
-                updateCitySelect();
                 updateCurrentTime();
                 
                 // Try to load cached times first
@@ -2171,14 +2455,25 @@
                 
                 // Only fetch new times if we're in the prayers section
                 fetchPrayerTimes();
+
+                // Add this to the prayers section initialization
+                if (sectionId === 'prayers') {
+                    // ... existing code ...
+
+                    // Auto-refresh prayer times at midnight
+                    const now = new Date();
+                    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+                    const timeUntilMidnight = tomorrow - now;
+                    
+                    setTimeout(() => {
+                        refreshPrayerTimes();
+                        // Set up daily refresh
+                        setInterval(refreshPrayerTimes, 24 * 60 * 60 * 1000);
+                    }, timeUntilMidnight);
+                }
             } 
             else if (sectionId === 'calendar') {
                 selectedSection.innerHTML = `
-                    <h2>
-                        <i class="fas fa-calendar"></i>
-                        <span class="lang-en">${translations['en'].prayerCalendar}</span>
-                        <span class="lang-ar" style="display:none;">${translations['ar'].prayerCalendar}</span>
-                    </h2>
                     <section class="prayer-calendar">
                         <div class="calendar-header">
                             <div class="calendar-nav">
@@ -2203,11 +2498,6 @@
             } 
             else if (sectionId === 'stats') {
                 selectedSection.innerHTML = `
-                    <h2>
-                        <i class="fas fa-chart-bar"></i>
-                        <span class="lang-en">Prayer Statistics</span>
-                        <span class="lang-ar" style="display:none;">إحصائيات الصلاة</span>
-                    </h2>
                     <section class="prayer-stats">
                         <div class="stats-container">
                             <div class="stats-card">
@@ -2233,11 +2523,6 @@
             else if (sectionId === 'settings') {
                 selectedSection.innerHTML = `
                     <section class="settings-section">
-                        <h2>
-                            <i class="fas fa-cog"></i>
-                            <span class="lang-en">${translations['en'].settings}</span>
-                            <span class="lang-ar" style="display:none;">${translations['ar'].settings}</span>
-                        </h2>
                         <div class="settings-container">
                             <div class="settings-item">
                                 <label>
@@ -2252,6 +2537,19 @@
                             </div>
                             <div class="settings-item">
                                 <label>
+                                    <span class="lang-en">City</span>
+                                    <span class="lang-ar" style="display:none;">المدينة</span>
+                                </label>
+                                <select onchange="changeCity(this.value)" class="city-select">
+                                    <option value="Nablus,Palestine">Nablus</option>
+                                    <option value="Jerusalem,Palestine">Jerusalem</option>
+                                    <option value="Gaza,Palestine">Gaza</option>
+                                    <option value="Hebron,Palestine">Hebron</option>
+                                    <option value="Ramallah,Palestine">Ramallah</option>
+                                </select>
+                            </div>
+                            <div class="settings-item reset-item">
+                                <label>
                                     <span class="lang-en">Reset Application</span>
                                     <span class="lang-ar" style="display:none;">إعادة ضبط المصنع</span>
                                 </label>
@@ -2264,6 +2562,9 @@
                         </div>
                     </section>
                 `;
+                // Set current city
+                const currentCity = localStorage.getItem('selectedCity') || 'Nablus,Palestine';
+                selectedSection.querySelector('.city-select').value = currentCity;
             }
 
             // Apply current language to all elements in the new section
@@ -2293,46 +2594,6 @@
             updateCurrentTime();
         }
 
-        // Update the initialization
-        document.addEventListener('DOMContentLoaded', async () => {
-            showHome();
-            
-            // Initialize with default values and update UI immediately
-            prayerTimes = {
-                Fajr: "05:00",
-                Dhuhr: "12:30",
-                Asr: "15:45",
-                Maghrib: "18:15",
-                Isha: "19:30"
-            };
-            updatePrayerTimes(); // Update UI with default times immediately
-            
-            // Start time updates
-            setInterval(updateCurrentTime, 1000);
-            
-            // Try to load cached prayer times
-            const cached = localStorage.getItem('prayerTimes');
-            if (cached) {
-                const data = JSON.parse(cached);
-                if (data.date === new Date().toDateString()) {
-                    prayerTimes = data.times;
-                    updatePrayerTimes();
-                }
-            }
-            
-            // Then fetch new times silently
-            try {
-                await fetchPrayerTimes();
-            } catch (error) {
-                console.error('Error fetching initial prayer times:', error);
-            }
-        });
-
-        function showHome() {
-            document.getElementById('main-nav').style.display = 'flex';
-            document.getElementById('section-content').style.display = 'none';
-        }
-
         function updateCitySelect() {
             const citySelect = document.getElementById('citySelect');
             const cities = {
@@ -2351,12 +2612,12 @@
         function confirmReset() {
             // Create modal overlay
             const overlay = document.createElement('div');
-            overlay.className = 'prayer-modal';
-            overlay.style.display = 'flex';
+            overlay.className = 'reset-modal';
+            document.body.appendChild(overlay);
 
             // Create confirmation dialog
             const dialog = document.createElement('div');
-            dialog.className = 'confirmation-modal';
+            dialog.className = 'reset-confirmation-modal';
             dialog.innerHTML = `
                 <h3>
                     <span class="lang-en">Factory Reset</span>
@@ -2364,9 +2625,9 @@
                 </h3>
                 <p>
                     <span class="lang-en">This will delete all your prayer tracking data and reset all settings. This action cannot be undone.</span>
-                    <span class="lang-ar" style="display:none;">سيؤدي هذا إلى حذف جميع بيانات تتبع الصلاة وإعادة تعيين جميع الإعدادات. لا يمكن التراجع عن هذا الإجراء.</span>
+                    <span class="lang-ar" style="display:none;">سيؤدي هذا إلى حذف جميع بيانات تتبع الصلاة وإعادة تعيين جميع الإعدادات. ا يمن التراجع عن هذا الإجراء.</span>
                 </p>
-                <div class="confirmation-actions">
+                <div class="reset-confirmation-actions">
                     <button onclick="performReset()" class="confirm-btn">
                         <span class="lang-en">Reset</span>
                         <span class="lang-ar" style="display:none;">إعادة ضبط</span>
@@ -2379,14 +2640,17 @@
             `;
 
             overlay.appendChild(dialog);
-            document.body.appendChild(overlay);
+            // Force a reflow before showing the modal
+            void overlay.offsetWidth;
+            overlay.style.display = 'flex';
             updateLanguageDisplay();
         }
 
         function closeConfirmation() {
-            const overlay = document.querySelector('.prayer-modal');
+            const overlay = document.querySelector('.reset-modal');
             if (overlay) {
-                overlay.remove();
+                overlay.style.display = 'none';
+                setTimeout(() => overlay.remove(), 300); // Remove after animation
             }
         }
 
@@ -2419,7 +2683,7 @@
             document.documentElement.setAttribute('dir', currentLanguage === 'ar' ? 'rtl' : 'ltr');
             
             // Show home screen first
-            showHome();
+            showSection('home');
             
             // Update all language elements
             updateLanguageDisplay();
@@ -2428,93 +2692,55 @@
         // Update all icon paths to use the correct GitHub Pages URL
         const iconPath = 'https://ilamberg.github.io/icons/logo.png';
 
-        function testNotification() {
-            // First check if notifications are supported
-            if (!("Notification" in window)) {
-                showNotification("Notifications are not supported in this browser", "error");
-                return;
+        async function refreshPrayerTimes() {
+            const refreshBtn = document.querySelector('.refresh-btn');
+            refreshBtn.classList.add('loading');
+            refreshBtn.disabled = true;
+
+            showNotification(translations[currentLanguage].refreshing);
+            
+            try {
+                await fetchPrayerTimes();
+                showNotification(translations[currentLanguage].refreshSuccess, 'success');
+            } catch (error) {
+                showNotification('updateError', 'error');
+            } finally {
+                refreshBtn.classList.remove('loading');
+                refreshBtn.disabled = false;
             }
-
-            // Request permission and show test notification
-            Notification.requestPermission().then(permission => {
-                if (permission === "granted") {
-                    const prayerName = 'Dhuhr';
-                    
-                    showNotification("Sending notification...", "success");
-                    
-                    setTimeout(() => {
-                        const notification = new Notification(
-                            currentLanguage === 'en' ? 
-                                `Adan for ${translations['en'][prayerName.toLowerCase()]}` :
-                                `أذان ${translations['ar'][prayerName.toLowerCase()]}`, 
-                            {
-                                body: currentLanguage === 'en' ? 
-                                    `It's time for ${translations['en'][prayerName.toLowerCase()]} prayer` :
-                                    `حان وقت صلاة ${translations['ar'][prayerName.toLowerCase()]}`,
-                                icon: iconPath, // Use the full URL
-                                tag: 'prayer-notification',
-                                timestamp: Date.now()
-                            }
-                        );
-
-                        notification.onclick = function() {
-                            window.focus();
-                            notification.close();
-                        };
-
-                        // Add error handling
-                        notification.onerror = function(error) {
-                            console.error('Notification error:', error);
-                            showNotification("Error showing notification", "error");
-                        };
-
-                        notificationsEnabled = true;
-                    }, 2000);
-                } else {
-                    showNotification("Notification permission denied", "error");
-                }
-            }).catch(error => {
-                console.error('Permission request error:', error);
-                showNotification("Error requesting notification permission", "error");
-            });
         }
 
-        // Update the prayer notification function
-        function notifyUser(prayerName) {
-            if (!("Notification" in window)) {
-                return;
+        function changeCity(city) {
+            localStorage.setItem('selectedCity', city);
+            const [cityName] = city.split(',');
+            
+            // Update translations with new city
+            translations.en.currentLocation = `Current Location: ${cityName}, Palestine`;
+            translations.ar.currentLocation = `الموقع الحالي: ${cityName}، فلسطين`;
+            
+            // Update location display if it exists
+            const locationDisplay = document.querySelector('.location-display');
+            if (locationDisplay) {
+                locationDisplay.innerHTML = `
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="lang-en">${translations.en.currentLocation}</span>
+                    <span class="lang-ar" style="display:none;">${translations.ar.currentLocation}</span>
+                `;
             }
-
-            if (Notification.permission === "granted" && notificationsEnabled) {
-                try {
-                    const notification = new Notification(
-                        currentLanguage === 'en' ? 
-                            `Adan for ${translations['en'][prayerName.toLowerCase()]}` :
-                            `أذان ${translations['ar'][prayerName.toLowerCase()]}`,
-                        {
-                            body: currentLanguage === 'en' ? 
-                                `It's time for ${translations['en'][prayerName.toLowerCase()]} prayer` :
-                                `حان وقت صلاة ${translations['ar'][prayerName.toLowerCase()]}`,
-                            icon: iconPath,
-                            requireInteraction: true,
-                            silent: false,
-                            tag: 'prayer-notification',
-                            timestamp: Date.now()
-                        }
-                    );
-
-                    notification.onclick = function() {
-                        window.focus();
-                        notification.close();
-                    };
-
-                    notification.onerror = function(error) {
-                        console.error('Prayer notification error:', error);
-                    };
-                } catch (error) {
-                    console.error('Error creating notification:', error);
-                }
-            }
+            
+            showNotification(
+                currentLanguage === 'en' 
+                    ? "City updated successfully" 
+                    : "تم تحديث المدينة بنجاح",
+                'success'
+            );
+            
+            // Force fetch new prayer times
+            fetchPrayerTimes().then(() => {
+                updatePrayerTimes();
+            }).catch(error => {
+                showNotification('updateError', 'error');
+            });
         }
     </script>
 </body>
